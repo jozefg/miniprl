@@ -11,4 +11,10 @@ sig
    * somewhere this instead returns NONE
    *)
   val run  : Term.t -> Term.t option
+
+  (* Behaves like run but attempts to compute a proper normal form,
+   * not just a head normal version. This is useful for debugging
+   * especially
+   *)
+  val normalize : Term.t -> Term.t option
 end

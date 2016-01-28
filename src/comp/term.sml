@@ -27,10 +27,10 @@ struct
     | FIX of t
     | CUST of Guid.t * t list
 
-  fun lift target i t =
-    case t of
+  fun lift target i tt =
+    case tt of
         VAR j => if j < target then VAR j else VAR (j + i)
-      | LAM b => lift (target + 1) i t
+      | LAM b => LAM (lift (target + 1) i b)
       | APP (f, a) => APP (lift target i f, lift target i a)
       | PI (a, b) => PI (lift target i a, lift (target + 1) i b)
 
@@ -56,10 +56,10 @@ struct
       | FIX e => FIX (lift (target + 1) i e)
       | CUST (id, es) => CUST (id, List.map (lift target i) es)
 
-  fun lower target i t =
-    case t of
+  fun lower target i tt =
+    case tt of
         VAR j => if j < target then VAR j else VAR (j - i)
-      | LAM b => lower (target + 1) i t
+      | LAM b => LAM (lower (target + 1) i b)
       | APP (f, a) => APP (lower target i f, lower target i a)
       | PI (a, b) => PI (lower target i a, lower (target + 1) i b)
 
@@ -90,7 +90,7 @@ struct
         VAR j => if j = i
                  then new
                  else if j > i then VAR (j - 1) else VAR j
-      | LAM b => subst (lift 0 1 new) (i + 1) b
+      | LAM b => LAM (subst (lift 0 1 new) (i + 1) b)
       | APP (f, a) => APP (subst new i f, subst new i a)
       | PI (a, b) => PI (subst new i a, subst (lift 0 1 new) (i + 1) b)
 
