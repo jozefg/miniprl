@@ -1,0 +1,8 @@
+Library
+  structure Guid
+  signature GUID
+is
+  $/basis.cm
+
+  guid.sig
+  guid.sml

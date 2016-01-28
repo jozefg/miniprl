@@ -1,0 +1,9 @@
+Library
+  structure Term
+  signature TERM
+is
+  $/basis.cm
+
+  term.sml
+  term.sig
+  ../util/sources.cm
