@@ -1,9 +1,15 @@
 Library
-  structure Term
   signature TERM
+  signature INTERPRETER
+
+  structure Term
+  structure Interpreter
 is
   $/basis.cm
+  ../util/sources.cm
 
   term.sml
   term.sig
-  ../util/sources.cm
+
+  interpreter.sig
+  interpreter.sml
