@@ -6,7 +6,10 @@ struct
   open T TacticMonad
   infixr >>= <>
 
-  fun id goal = return {evidence = fn [d] => d, goals = [goal]}
+  fun id goal =
+    return { evidence = fn [d] => d | _ => raise Fail "id invariant"
+           , goals = [goal]
+           }
   fun fail _ = M.fail
 
   fun zipAppOpt xs ys =
