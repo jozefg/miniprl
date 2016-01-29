@@ -1,8 +1,18 @@
 Library
   signature TACTIC_MONAD
   structure TacticMonad
+
+  signature TACTIC
+
+  signature PRIMITIVE_TACTICS
+  functor   PrimitiveTactics
 is
+  $/basis.cm
+
   tactic-monad.sig
   tactic-monad.sml
 
   tactic.sig
+
+  primitives.sig
+  primitives.sml
