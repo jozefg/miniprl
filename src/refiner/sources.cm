@@ -1,0 +1,4 @@
+Library
+  signature DERIVATION
+is
+  derivation.sig
