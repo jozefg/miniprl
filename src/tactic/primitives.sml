@@ -45,10 +45,14 @@ struct
                , evidence = joinEvidence evidence subresults
                }))
 
-  fun next (t1, t2) goal =
+  fun nextLazy (t1, t2) goal =
     t1 goal >>= (fn {goals, evidence} =>
-    sequence (List.map t2 goals) >>= (fn subresults =>
+    sequence (List.map (fn g => t2 () g) goals) >>= (fn subresults =>
     return { goals = List.concat (List.map #goals subresults)
            , evidence = joinEvidence evidence subresults
            }))
+
+  fun next (t1, t2) = nextLazy (t1, fn () => t2)
+
+  fun repeat t = choose (nextLazy (t, fn () => repeat t), id)
 end

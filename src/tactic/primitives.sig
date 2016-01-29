@@ -14,8 +14,17 @@ sig
   (* There are several ways of composing tactics together to
    * build larger ones as well
    *)
-  val choose : Tactic.t * Tactic.t -> Tactic.t
-  val next   : Tactic.t * Tactic.t -> Tactic.t
-  val split  : Tactic.t * Tactic.t list -> Tactic.t
 
+  (* run one tactic and if it fails, a different one *)
+  val choose : Tactic.t * Tactic.t -> Tactic.t
+  (* run one tactic and then run another one on all the subgoals *)
+  val next   : Tactic.t * Tactic.t -> Tactic.t
+  (* run on tactic and feed each subgoal to the matching tactic in the list.
+   * There must be exactly the same amount of subgoals and subtactics
+   *)
+  val split  : Tactic.t * Tactic.t list -> Tactic.t
+  (* Run a tactic over and over again until it fails, at which point behave
+   * as identity
+   *)
+  val repeat : Tactic.t -> Tactic.t
 end
