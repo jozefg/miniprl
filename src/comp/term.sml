@@ -23,6 +23,7 @@ struct
     | EQ of t * t * t
     | CEQ of t * t
     | BASE
+    | UNI of int
     | PER of t
     | FIX of t
     | CUST of Guid.t * t list
@@ -52,6 +53,7 @@ struct
       | EQ (a, b, t) => EQ (lift target i a, lift target i b, lift target i t)
       | CEQ (a, b) => CEQ (lift target i a, lift target i b)
       | BASE => BASE
+      | UNI i => UNI i
       | PER per => PER (lift (target + 2) i per)
       | FIX e => FIX (lift (target + 1) i e)
       | CUST (id, es) => CUST (id, List.map (lift target i) es)
@@ -81,6 +83,7 @@ struct
       | EQ (a, b, t) => EQ (lower target i a, lower target i b, lower target i t)
       | CEQ (a, b) => CEQ (lower target i a, lower target i b)
       | BASE => BASE
+      | UNI i => UNI i
       | PER per => PER (lower (target + 2) i per)
       | FIX e => FIX (lower (target + 1) i e)
       | CUST (id, es) => CUST (id, List.map (lower target i) es)
@@ -112,6 +115,7 @@ struct
       | EQ (a, b, t) => EQ (subst new i a, subst new i b, subst new i t)
       | CEQ (a, b) => CEQ (subst new i a, subst new i b)
       | BASE => BASE
+      | UNI i => UNI i
       | PER per => PER (subst (lift 0 2 new) (i + 2) per)
       | FIX e => FIX (subst (lift 0 1 new) (i + 1) e)
       | CUST (id, es) => CUST (id, List.map (subst new i) es)

@@ -26,9 +26,11 @@ sig
     | EQ of t * t * t (* The proposition for equality *)
     | CEQ of t * t (* The stricter, computational version of equality *)
     | BASE (* The type of all terms *)
+    | UNI of int (* A universe for all types smaller than some i *)
     | PER of t (* BINDS. A type for lifting a PER to behave as a type *)
     | FIX of t (* BINDS. Purely for convenience, a fixpoint operator *)
     | CUST of (Guid.t * t list) (* A custom operator supplied by a user *)
+
   (* Given a term, an index, and a second term, replace all
    * occurences of the index in the second term with the first
    * term

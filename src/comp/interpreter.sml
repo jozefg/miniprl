@@ -57,6 +57,7 @@ struct
       | EQ (a, b, t) => HNF
       | CEQ (a, b) => HNF
       | BASE => HNF
+      | UNI i => HNF
       | PER per => HNF
       | FIX e => STEP (Term.subst (FIX e) 0 e)
       | CUST (id, opers) => HNF
@@ -99,6 +100,7 @@ struct
       | EQ (a, b, t) => EQ (normUnsafe a, normUnsafe b, normUnsafe t)
       | CEQ (a, b) => CEQ (normUnsafe a, normUnsafe b)
       | BASE => BASE
+      | UNI i => UNI i
       | PER per => PER (normUnsafe per)
       | FIX e => normUnsafe (Term.subst (FIX e) 0 e)
       | CUST (id, opers) => CUST (id, map normUnsafe opers)
