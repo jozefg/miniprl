@@ -14,6 +14,13 @@ struct
   fun return a k = k a
   fun >>= (a, f) k = a (fn av => f av k)
 
+  infixr >>=
+  fun sequence xs =
+    case xs of
+        [] => return []
+      | mx :: mxs =>
+        mx >>= (fn x => map (fn xs => x :: xs) (sequence mxs))
+
   fun run a = a SOME
 
   fun fail k = NONE

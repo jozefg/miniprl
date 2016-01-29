@@ -18,6 +18,8 @@ sig
   val return : 'a -> ('result, 'a) t
   val >>=    : ('result, 'a) t * ('a -> ('result, 'b) t) -> ('result, 'b) t
 
+  val sequence : ('result, 'a) t list -> ('result, 'a list) t
+
   val run    : ('a, 'a) t -> 'a option
   val choose : (unit -> ('result, 'a) t) list -> ('result, 'a) t
   val fail   : ('result, 'a) t
