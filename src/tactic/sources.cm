@@ -4,3 +4,5 @@ Library
 is
   tactic-monad.sig
   tactic-monad.sml
+
+  tactic.sig
