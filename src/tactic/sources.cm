@@ -1,0 +1,6 @@
+Library
+  signature TACTIC_MONAD
+  structure TacticMonad
+is
+  tactic-monad.sig
+  tactic-monad.sml
