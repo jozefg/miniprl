@@ -85,4 +85,30 @@ sig
      * (Note that we need to lift B in DeBruijn)
      *)
     | SND_EQ of Term.t * t
+
+    (* H >> nat = nat in U(i)
+     *)
+    | NAT_EQ of int
+    (* H >> nat
+     *)
+    | NAT_INTRO
+    (* H >> A
+     *   H(i) = nat
+     *   H, zero = i in nat >> [zero/i]A
+     *   H, n : nat, rec : [n/i]A, suc(n) = i : A >> [suc(n)/i]A
+     *)
+    | NAT_ELIM of int * t * t (* BINDS *)
+    (* H >> zero = zero in nat
+     *)
+    | ZERO_EQ
+    (* H >> suc(n) = suc(m) in nat
+     *   H >> n = m in natural
+     *)
+    | SUCC_EQ of t
+    (* H >> rec(n; z; x.y.s) = rec(n'; z'; x.y.s') in A
+     *   H >> n = n' in nat
+     *   H >> z = z in A
+     *   H, x : nat, y : A >> s = s' in A
+     *)
+    | REC_EQ of t * t * t (* BINDS *)
 end
