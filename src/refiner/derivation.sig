@@ -55,4 +55,34 @@ sig
      *   H, x : A >> M x = N x in B
      *)
     | FUN_EXT of t * t * t (* BINDS *)
+
+    (* H >> Sig x : A. B = Sig x : A'. B' in U(i)
+     *   H >> A = A' in U(i)
+     *   H, x : A >> B = B' in U(i)
+     *)
+    | SIG_EQ of t * t * t (* BINDS *)
+    (* H >> Sig x : A. B
+     *   H >> a = a in A
+     *   H >> [a/x]B
+     *)
+    | SIG_INTRO of Term.t * t
+    (* H >> C
+     *   H(i) = Sig x : A. B
+     *   H, x : A, y : B >> C
+     *)
+    | SIG_ELIM of int * t (* BINDS *)
+    (* H >> pair(a; b) = pair(a'; b') in Sig x : A. B
+     *  H >> a = a' in A
+     *  H >> b = b' in [a/x]B
+     *)
+    | PAIR_EQ of t * t
+    (* H >> fst(a) = fst(a') in A
+     *   H >> a = a' in Sig x : A. B
+     *)
+    | FST_EQ of Term.t * t
+    (* H >> snd(a) = snd(a') in B
+     *   H >> a = a' in Sig _ : A. B
+     * (Note that we need to lift B in DeBruijn)
+     *)
+    | SND_EQ of Term.t * t
 end
