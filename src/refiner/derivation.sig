@@ -111,4 +111,14 @@ sig
      *   H, x : nat, y : A >> s = s' in A
      *)
     | REC_EQ of t * t * t (* BINDS *)
+
+    (* H >> unit = unit in U(i)
+     *)
+    | UNIT_EQ of int
+    (* H >> tt = tt in unit
+     *)
+    | TT_EQ
+    (* H >> unit
+     *)
+    | UNIT_INTRO
 end
