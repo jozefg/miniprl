@@ -169,4 +169,40 @@ sig
     (* H >> a ~ a
      *)
     | CEQ_REFL
+
+    (* H >> base = base in U(i)
+     *)
+    | BASE_EQ
+    (* H >> a = b in base
+     *   x in FV(a) => H(x) = base
+     *   x in FV(b) => H(x) = base
+     *   H >> a ~ b
+     *)
+    | BASE_MEM_EQ of t
+    (* H >> C
+     *   H(i) = (a = b in base)
+     * H, a ~ b >> C
+     *)
+    | BASE_ELIM_EQ of int * t (* BINDS *)
+
+    (* H >> U(i) = U(i) in U(i + 1)
+     *)
+    | UNI_EQ
+    (* H >> per(x.y.A) = per(x.y.A') in U(i)
+     *   H, x : base, y : base >> A = A in U(i)
+     *   H, x : base, y : base >> A' = A' in U(i)
+     *   H, x : base, y : base, z : A >> A'
+     *   H, x : base, y : base, z : A' >> A
+     *   H, a : base, b : base, z : [a, b/x, y]A >> [b, a/x, y]A
+     *   H, a : base, b : base, c : base, z1 : [a, b/x, y]A, z2 : [b, c/x, y]A
+     *      >> [a, c/x, y]A
+     *)
+    | PER_EQ of t * t * t * t * t * t (* BINDS *) (* haha cries *)
+    (* H >> a = b in per(x.y.A)
+     *   H >> a in base
+     *   H >> b in base
+     *   H >> [a, b/x, y]A
+     *   H >> per(x.y.A) = per(x.y.A) in U(i)
+     *)
+    | PER_MEM_EQ of int * t * t * t * t
 end
