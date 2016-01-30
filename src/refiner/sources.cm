@@ -1,4 +1,8 @@
 Library
   signature DERIVATION
 is
+  $/basis.cm
+  ../comp/sources.cm
+  ../tactic/sources.cm
+
   derivation.sig
