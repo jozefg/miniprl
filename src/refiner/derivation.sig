@@ -121,4 +121,52 @@ sig
     (* H >> unit
      *)
     | UNIT_INTRO
+
+    (* H >> (a = b in A) = (a' = b' in A') in U(i)
+     *   H >> A = A' in U(i)
+     *   H >> a = a' in A
+     *   H >> b = b' in A'
+     *)
+    | EQ_EQ of t * t * t
+    (* H >> tt = tt in (a = b in A)
+     *   H >> a = b in A
+     *)
+    | EQ_MEM_EQ of t
+    (* H >> a = b in A
+     *   H >> b = a in A
+     *)
+    | EQ_SYM of t
+    (* H >> [a/x]C
+     *   H, x : A >> C' in U(i)
+     *   H >> a = b in A
+     *   H >> [b/x]C
+     *)
+    | EQ_SUBST of int * Term.t * t * t * t (* BINDS *)
+
+    (* H >> (a ~ b) = (a' ~ b') in U(i)
+     *   H >> a ~ a'
+     *   H >> b ~ b'
+     *)
+    | CEQ_EQ of t * t
+    (* H >> tt = tt in (a ~ b)
+     *   H >> a ~ b
+     *)
+    | CEQ_MEM_EQ of t
+    (* H >> a ~ b
+     *   H >> b ~ a
+     *)
+    | CEQ_SYM of t
+    (* H >> [a/x]C
+     *   H >> a ~ b
+     *   H >> [b/x]C
+     *)
+    | CEQ_SUBST of int * Term.t * t * t
+    (* H >> a ~ b
+     *   a |-> a'
+     *   H >> a' ~ b
+     *)
+    | CEQ_STEP of t
+    (* H >> a ~ a
+     *)
+    | CEQ_REFL
 end
