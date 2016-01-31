@@ -188,6 +188,10 @@ sig
     (* H >> U(i) = U(i) in U(i + 1)
      *)
     | UNI_EQ
+    (* H >> A = B in U(i + 1)
+     *   H >> A = B in U(i)
+     *)
+    | CUMULATIVE
     (* H >> per(x.y.A) = per(x.y.A') in U(i)
      *   H, x : base, y : base >> A = A in U(i)
      *   H, x : base, y : base >> A' = A' in U(i)
@@ -205,4 +209,12 @@ sig
      *   H >> per(x.y.A) = per(x.y.A) in U(i)
      *)
     | PER_MEM_EQ of int * t * t * t * t
+
+    (* H >> C
+     *   H >> t = t in C *)
+    | WITNESS of Term.t
+    (* H >> C
+     *   opid is a lemma proving L
+     *   H, L >> C*)
+    | CUT of Guid.t
 end

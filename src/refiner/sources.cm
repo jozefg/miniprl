@@ -4,5 +4,6 @@ is
   $/basis.cm
   ../comp/sources.cm
   ../tactic/sources.cm
+  ../util/sources.cm
 
   derivation.sig
