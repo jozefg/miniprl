@@ -4,6 +4,10 @@ Library
 
   signature EXTRACT
   structure Extract
+
+  signature GOAL
+  structure Goal
+  structure PrlTactic
 is
   $/basis.cm
   ../comp/sources.cm
@@ -15,3 +19,6 @@ is
 
   extract.sig
   extract.sml
+
+  goal.sig
+  goal.sml
