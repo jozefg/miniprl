@@ -65,7 +65,7 @@ sig
      *   H >> a = a in A
      *   H >> [a/x]B
      *)
-    | SIG_INTRO of Term.t * t
+    | SIG_INTRO of Term.t * t * t
     (* H >> C
      *   H(i) = Sig x : A. B
      *   H, x : A, y : B >> C
@@ -212,9 +212,13 @@ sig
 
     (* H >> C
      *   H >> t = t in C *)
-    | WITNESS of Term.t
+    | WITNESS of Term.t * t
     (* H >> C
      *   opid is a lemma proving L
      *   H, L >> C*)
-    | CUT of Guid.t
+    | CUT of Guid.t * t (* BINDS *)
+    (* H >> C
+     *   H(i) = C
+     *)
+    | VAR of int
 end

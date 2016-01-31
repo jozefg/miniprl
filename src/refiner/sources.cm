@@ -1,5 +1,9 @@
 Library
   signature DERIVATION
+  structure Derivation
+
+  signature EXTRACT
+  structure Extract
 is
   $/basis.cm
   ../comp/sources.cm
@@ -7,3 +11,7 @@ is
   ../util/sources.cm
 
   derivation.sig
+  derivation.sml
+
+  extract.sig
+  extract.sml
