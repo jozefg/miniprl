@@ -22,7 +22,7 @@ struct
     | ZERO_EQ
     | SUCC_EQ of t
     | REC_EQ of t * t * t (* BINDS *)
-    | UNIT_EQ of int
+    | UNIT_EQ
     | TT_EQ
     | UNIT_INTRO
     | EQ_EQ of t * t * t

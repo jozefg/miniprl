@@ -18,6 +18,8 @@ Library
   signature NAT_RULES
   structure NatRules
 
+  signature UNIT_RULES
+  structure UnitRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -44,3 +46,6 @@ is
 
   rules/nat.sig
   rules/nat.sml
+
+  rules/unit.sig
+  rules/unit.sml

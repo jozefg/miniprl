@@ -17,7 +17,7 @@ struct
         | D.ZERO_EQ => TT
         | D.SUCC_EQ _ => TT
         | D.REC_EQ _ => TT
-        | D.UNIT_EQ _ => TT
+        | D.UNIT_EQ => TT
         | D.TT_EQ => TT
         | D.EQ_EQ _ => TT
         | D.EQ_MEM_EQ _ => TT

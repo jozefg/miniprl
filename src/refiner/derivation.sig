@@ -117,7 +117,7 @@ sig
 
     (* H >> unit = unit in U(i)
      *)
-    | UNIT_EQ of int
+    | UNIT_EQ
     (* H >> tt = tt in unit
      *)
     | TT_EQ
