@@ -25,9 +25,10 @@ sig
   (* H >> pair(a; b) = pair(a'; b') in Sig x : A. B
    *  H >> a = a' in A
    *  H >> b = b' in [a/x]B
+   *  H, x : A >> B = B in U(i)
    * Uses: PAIR_EQ
    *)
-  val PairEq : PrlTactic.t
+  val PairEq : Utils.universe -> PrlTactic.t
 
   (* H >> fst(a) = fst(a') in A
    *   H >> a = a' in Sig x : A. B
@@ -36,10 +37,11 @@ sig
    *)
   val FstEq : Term.t -> PrlTactic.t
 
-  (* H >> snd(a) = snd(a') in A
+  (* H >> snd(a) = snd(a') in B'
    *   H >> a = a' in Sig x : A. B
+   *   H >> [a/x]B = B' in U(i)
    * Uses: SND_EQ
    * Note that the supplied term should be Sig x : A . B
    *)
-  val SndEq : Term.t -> PrlTactic.t
+  val SndEq : Utils.universe -> Term.t -> PrlTactic.t
 end

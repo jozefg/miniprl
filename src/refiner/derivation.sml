@@ -13,9 +13,9 @@ struct
     | SIG_EQ of t * t (* BINDS *)
     | SIG_INTRO of int * Term.t * t * t * t
     | SIG_ELIM of int * t (* BINDS *)
-    | PAIR_EQ of t * t
+    | PAIR_EQ of int * t * t * t (* BINDS *)
     | FST_EQ of Term.t * t
-    | SND_EQ of Term.t * t
+    | SND_EQ of int * Term.t * t * t
     | NAT_EQ of int
     | NAT_INTRO
     | NAT_ELIM of int * t * t (* BINDS *)

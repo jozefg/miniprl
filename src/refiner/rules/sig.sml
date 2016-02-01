@@ -41,7 +41,36 @@ struct
                }
       | _ => fail
 
-  fun PairEq (cxt >> t) = raise Fail ""
-  fun FstEq tp (cxt >> t) = raise Fail ""
-  fun SndEq tp (cxt >> t) = raise Fail ""
+  fun PairEq uni (cxt >> t) =
+    case t of
+        EQ(PAIR (m1, n1), PAIR (m2, n2), SIG (A, B)) =>
+        return { goals = [ cxt >> EQ (m1, m2, A)
+                         , cxt >> EQ (n1, n2, subst m1 0 B)
+                         , A :: cxt >> EQ (B, B, UNI uni)
+                         ]
+               , evidence = fn [d1, d2, d3] => PAIR_EQ (uni, d1, d2, d3)
+                             | _ => raise MalformedEvidence
+               }
+      | _ => fail
+
+  fun FstEq tp (cxt >> t) =
+    case (tp, t) of
+        (SIG (A, B), EQ (FST m1, FST m2, A')) =>
+        if A = A' (* Check the supplied type against the goal *)
+        then return { goals = [ cxt >> EQ (m1, m2, tp) ]
+                    , evidence = fn [d] => FST_EQ (tp, d)
+                                  | _ => raise MalformedEvidence
+                    }
+        else fail (* fail if they don't match *)
+      | _ => fail
+
+  fun SndEq uni tp (cxt >> t) =
+    case (tp, t) of
+        (SIG (A, B), EQ (FST m1, FST m2, A')) =>
+        return { goals = [ cxt >> EQ (m1, m2, tp)
+                         , cxt >> EQ (subst (FST m1) 0 B, B, UNI uni) ]
+               , evidence = fn [d1, d2] => SND_EQ (uni, tp, d1, d2)
+                             | _ => raise MalformedEvidence
+               }
+      | _ => fail
 end
