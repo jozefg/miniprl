@@ -75,7 +75,7 @@ sig
     (* H >> pair(a; b) = pair(a'; b') in Sig x : A. B
      *  H >> a = a' in A
      *  H >> b = b' in [a/x]B
-     *  H, a : A >> B = B in U(i)
+     *  H, x : A >> B = B in U(i)
      *)
     | PAIR_EQ of int * t * t * t (* BINDS *)
     (* H >> fst(a) = fst(a') in A
@@ -83,7 +83,7 @@ sig
      *)
     | FST_EQ of Term.t * t
     (* H >> snd(a) = snd(a') in B
-     *   H >> a = a' in Sig x' : A. B'
+     *   H >> a = a' in Sig x : A. B'
      *   H >> [fst(a)/x]B' = B in U(i)
      * (Note that we need to lift B in DeBruijn)
      *)

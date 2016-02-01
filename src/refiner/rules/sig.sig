@@ -39,7 +39,7 @@ sig
 
   (* H >> snd(a) = snd(a') in B'
    *   H >> a = a' in Sig x : A. B
-   *   H >> [a/x]B = B' in U(i)
+   *   H >> [fst(a)/x]B = B' in U(i)
    * Uses: SND_EQ
    * Note that the supplied term should be Sig x : A . B
    *)
