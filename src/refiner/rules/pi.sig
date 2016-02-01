@@ -21,14 +21,14 @@ sig
    *   H, x : A >> B(x) = B'(x) in U(i)
    * Uses: PI_EQ
    *)
-  val Eq     : PrlTactic.t
+  val Eq : PrlTactic.t
 
   (* H >> Pi x : A. B
    *   H >> A = A in U(i)
    *   H, x : A >> B
    * Uses: PI_INTRO
    *)
-  val Intro  : Utils.universe -> PrlTactic.t
+  val Intro : Utils.universe -> PrlTactic.t
 
   (* H >> C
    *   H(i) = Pi x : A. B
@@ -36,22 +36,23 @@ sig
    *   H, [a/x]B >> C
    * Uses: PI_ELIM
    *)
-  val Elim   : Utils.target -> Term.t -> PrlTactic.t
+  val Elim : Utils.target -> Term.t -> PrlTactic.t
 
   (* H >> \x. M = \x. N in Pi x : A. B
    *   H >> A = A in U(i)
    *   H, x : A >> M = N in B
    * Uses: LAM_EQ
    *)
-  val LamEq  : Utils.universe -> PrlTactic.t
+  val LamEq : Utils.universe -> PrlTactic.t
 
   (* H >> M N = M' N' in B
    *   H >> M = M' in Pi x : A. B'
    *   H >> N = N' in A
    *   H >> [N/x]B' = B in U(i)
    * Uses: AP_EQ
+   * Note that the supplied term should be of the form Pi x : A. B'
    *)
-  val ApEq   : Utils.universe -> Term.t -> PrlTactic.t
+  val ApEq : Utils.universe -> Term.t -> PrlTactic.t
 
   (* H >> M = N in Pi x : A. B
    *   H >> M = M in Pi x : A. B
