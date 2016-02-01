@@ -8,9 +8,9 @@ struct
     case e of
         VAR i => HNF
       | LAM b => HNF
-      | APP (f, a) => (
+      | AP (f, a) => (
         case step f of
-            STEP f' => STEP (APP (f', a))
+            STEP f' => STEP (AP (f', a))
           | STUCK => STUCK
           | HNF =>
             case f of
@@ -85,7 +85,7 @@ struct
     case runUnsafe e of
         VAR i => VAR i
       | LAM b => LAM (normUnsafe b)
-      | APP (f, a) => APP (normUnsafe f, normUnsafe a)
+      | AP (f, a) => AP (normUnsafe f, normUnsafe a)
       | PI (a, b) => PI (normUnsafe a, normUnsafe b)
       | PAIR (l, r) => PAIR (normUnsafe l, normUnsafe r)
       | FST e => FST (normUnsafe e)

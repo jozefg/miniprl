@@ -7,7 +7,7 @@ sig
   datatype t
     = VAR of int (* A De Bruijn variable *)
     | LAM of t (* BINDS. Equivalent to fn x => e *)
-    | APP of t * t (* Apply a function to an argument *)
+    | AP of t * t (* Apply a function to an argument *)
     | PI  of t * t (* BINDS. The type of functions, Think Pi x : A. B *)
 
     | PAIR of t * t (* A tuple, (e, e) *)

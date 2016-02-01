@@ -4,7 +4,7 @@ struct
   datatype t
     = VAR of int
     | LAM of t
-    | APP of t * t
+    | AP of t * t
     | PI  of t * t
 
     | PAIR of t * t
@@ -32,7 +32,7 @@ struct
     case tt of
         VAR j => if j < target then VAR j else VAR (j + i)
       | LAM b => LAM (lift (target + 1) i b)
-      | APP (f, a) => APP (lift target i f, lift target i a)
+      | AP (f, a) => AP (lift target i f, lift target i a)
       | PI (a, b) => PI (lift target i a, lift (target + 1) i b)
 
       | PAIR (l, r) => PAIR (lift target i l, lift target i r)
@@ -62,7 +62,7 @@ struct
     case tt of
         VAR j => if j < target then VAR j else VAR (j - i)
       | LAM b => LAM (lower (target + 1) i b)
-      | APP (f, a) => APP (lower target i f, lower target i a)
+      | AP (f, a) => AP (lower target i f, lower target i a)
       | PI (a, b) => PI (lower target i a, lower (target + 1) i b)
 
       | PAIR (l, r) => PAIR (lower target i l, lower target i r)
@@ -94,7 +94,7 @@ struct
                  then new
                  else if j > i then VAR (j - 1) else VAR j
       | LAM b => LAM (subst (lift 0 1 new) (i + 1) b)
-      | APP (f, a) => APP (subst new i f, subst new i a)
+      | AP (f, a) => AP (subst new i f, subst new i a)
       | PI (a, b) => PI (subst new i a, subst (lift 0 1 new) (i + 1) b)
 
       | PAIR (l, r) => PAIR (subst new i l, subst new i r)
