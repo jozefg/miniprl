@@ -26,6 +26,9 @@ Library
 
   signature CEQ_RULES
   structure CeqRules
+
+  signature BASE_RULES
+  structure BaseRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -61,3 +64,6 @@ is
 
   rules/ceq.sig
   rules/ceq.sml
+
+  rules/base.sig
+  rules/base.sml

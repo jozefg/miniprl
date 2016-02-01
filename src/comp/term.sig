@@ -46,4 +46,9 @@ sig
    * but leave all free variables below N1 alone
    *)
   val lower : int -> int -> t -> t
+
+  (* Return a list of all the free variables in a term,
+   * the list shall contain no duplicated entries.
+   *)
+  val freevars : t -> int list
 end

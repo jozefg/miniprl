@@ -119,4 +119,39 @@ struct
       | PER per => PER (subst (lift 0 2 new) (i + 2) per)
       | FIX e => FIX (subst (lift 0 1 new) (i + 1) e)
       | CUST (id, es) => CUST (id, List.map (subst new i) es)
+
+  (* TODO: This is very innefficient, maybe use a set? The downside
+   * is that we have to rope in cmlib or similar for that.
+   *)
+  fun dedup (x :: xs) = x :: List.filter (fn y => x <> y) xs
+    | dedup [] = []
+
+  fun freevars t =
+    let
+      fun go c t =
+        case t of
+            VAR i => if i < c then [] else [i - c]
+          | LAM b => go (c + 1) b
+          | AP (f, a) => go c f @ go c a
+          | PI (a, b) => go c a @ go (c + 1) b
+          | PAIR (l, r) => go c l @ go c r
+          | FST e => go c e
+          | SND e => go c e
+          | SIG (a, b) => go c a @ go (c + 1) b
+          | ZERO => []
+          | SUCC t => go c t
+          | REC (n, z, s) => go c n @ go c z @ go (c + 2) s
+          | NAT => []
+          | TT => []
+          | UNIT => []
+          | EQ (a, b, t) => go c a @ go c b @ go c t
+          | CEQ (a, b) => go c a @ go c b
+          | BASE => []
+          | UNI i => []
+          | PER per => go (c + 2) per
+          | FIX e => go (c + 1) e
+          | CUST (id, es) => List.concat (map (go c) es)
+    in
+      dedup (go 0 t)
+    end
 end
