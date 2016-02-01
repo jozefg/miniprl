@@ -22,11 +22,11 @@ sig
    * of ints specify universe levels (i in U(i))
    *)
   datatype t
-      (* H >> Pi x : A. B = Pi x : A. B in U(i)
-       *   H >> A = A in U(i)
-       *   H, x : A >> B(x) = B(x) in U(i)
-       *)
-    = PI_EQ of int * t * t (* BINDS *)
+    (* H >> Pi x : A. B = Pi x : A'. B' in U(i)
+     *   H >> A = A' in U(i)
+     *   H, x : A >> B(x) = B'(x) in U(i)
+     *)
+    = PI_EQ of t * t (* BINDS *)
     (* H >> Pi x : A. B
      *   H >> A = A in U(i)
      *   H, x : A >> B
@@ -38,7 +38,7 @@ sig
      *   H, [a/x]B >> C
      *)
     | PI_ELIM of int * Term.t * t * t (* BINDS *)
-    (* H >> \x. M = \y. N in Pi x : A. B
+    (* H >> \x. M = \x. N in Pi x : A. B
      *   H >> A = A in U(i)
      *   H, x : A >> M = N in B
      *)
@@ -48,7 +48,7 @@ sig
      *   H >> N = N' in A
      *   H >> [N/x]B' = B in U(i)
      *)
-    | AP_EQ of int * Term.t * t * t (* We require the function type to be provided *)
+    | AP_EQ of int * Term.t * t * t * t (* We require the function type to be provided *)
     (* H >> M = N in Pi x : A. B
      *   H >> M = M in Pi x : A. B
      *   H >> N = N in Pi x : A. B

@@ -4,11 +4,11 @@
 structure Derivation :> DERIVATION =
 struct
   datatype t
-    = PI_EQ of int * t * t (* BINDS *)
+    = PI_EQ of t * t (* BINDS *)
     | PI_INTRO of int * t * t (* BINDS *)
     | PI_ELIM of int * Term.t * t * t (* BINDS *)
     | LAM_EQ of int * t * t (* BINDS *)
-    | AP_EQ of int * Term.t * t * t (* We require the function type to be provided *)
+    | AP_EQ of int * Term.t * t * t * t (* We require the function type to be provided *)
     | FUN_EXT of t * t * t (* BINDS *)
     | SIG_EQ of t * t * t (* BINDS *)
     | SIG_INTRO of Term.t * t * t
