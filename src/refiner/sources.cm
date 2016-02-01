@@ -11,6 +11,9 @@ Library
 
   signature PI_RULES
   structure PiRules
+
+  signature SIG_RULES
+  structure SigRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -31,3 +34,6 @@ is
 
   rules/pi.sig
   rules/pi.sml
+
+  rules/sig.sig
+  rules/sig.sml
