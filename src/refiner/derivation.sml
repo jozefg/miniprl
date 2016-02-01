@@ -10,8 +10,8 @@ struct
     | LAM_EQ of int * t * t (* BINDS *)
     | AP_EQ of int * Term.t * t * t * t (* We require the function type to be provided *)
     | FUN_EXT of t * t * t (* BINDS *)
-    | SIG_EQ of t * t * t (* BINDS *)
-    | SIG_INTRO of Term.t * t * t
+    | SIG_EQ of t * t (* BINDS *)
+    | SIG_INTRO of int * Term.t * t * t * t
     | SIG_ELIM of int * t (* BINDS *)
     | PAIR_EQ of t * t
     | FST_EQ of Term.t * t

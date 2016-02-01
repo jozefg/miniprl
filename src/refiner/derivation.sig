@@ -60,12 +60,13 @@ sig
      *   H >> A = A' in U(i)
      *   H, x : A >> B = B' in U(i)
      *)
-    | SIG_EQ of t * t * t (* BINDS *)
+    | SIG_EQ of t * t (* BINDS *)
     (* H >> Sig x : A. B
      *   H >> a = a in A
      *   H >> [a/x]B
+     *   H, a : A >> B = B in U(i)
      *)
-    | SIG_INTRO of Term.t * t * t
+    | SIG_INTRO of int * Term.t * t * t * t (* BINDS *)
     (* H >> C
      *   H(i) = Sig x : A. B
      *   H, x : A, y : B >> C

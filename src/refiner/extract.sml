@@ -36,7 +36,7 @@ struct
         | D.EQ_SUBST (_, _, _, _, d) => extract d
         | D.PI_INTRO (_, _, d) => LAM (extract d)
         | D.PI_ELIM (fIdx, arg, _, d) => subst (AP (VAR fIdx, arg)) 0 (extract d)
-        | D.SIG_INTRO (t, _, d) => PAIR (t, extract d)
+        | D.SIG_INTRO (_, t, _, d, _) => PAIR (t, extract d)
         | D.SIG_ELIM (sigIdx, d) =>
           subst (SND (VAR sigIdx)) 0
                 (subst (FST (VAR (sigIdx + 1))) 0 (extract d))
