@@ -14,6 +14,10 @@ Library
 
   signature SIG_RULES
   structure SigRules
+
+  signature NAT_RULES
+  structure NatRules
+
 is
   $/basis.cm
   ../comp/sources.cm
@@ -37,3 +41,6 @@ is
 
   rules/sig.sig
   rules/sig.sml
+
+  rules/nat.sig
+  rules/nat.sml

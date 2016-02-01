@@ -16,7 +16,7 @@ struct
     | PAIR_EQ of int * t * t * t (* BINDS *)
     | FST_EQ of Term.t * t
     | SND_EQ of int * Term.t * t * t
-    | NAT_EQ of int
+    | NAT_EQ
     | NAT_INTRO
     | NAT_ELIM of int * t * t (* BINDS *)
     | ZERO_EQ

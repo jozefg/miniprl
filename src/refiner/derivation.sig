@@ -91,7 +91,7 @@ sig
 
     (* H >> nat = nat in U(i)
      *)
-    | NAT_EQ of int
+    | NAT_EQ
     (* H >> nat
      *)
     | NAT_INTRO

@@ -12,7 +12,7 @@ struct
         | D.PAIR_EQ _ => TT
         | D.FST_EQ _ => TT
         | D.SND_EQ _ => TT
-        | D.NAT_EQ _ => TT
+        | D.NAT_EQ => TT
         | D.SIG_EQ _ => TT
         | D.ZERO_EQ => TT
         | D.SUCC_EQ _ => TT
