@@ -32,7 +32,7 @@ struct
     | CEQ_EQ of t * t
     | CEQ_MEM_EQ of t
     | CEQ_SYM of t
-    | CEQ_SUBST of int * Term.t * t * t
+    | CEQ_SUBST of Term.t * t * t
     | CEQ_STEP of t
     | CEQ_REFL
     | BASE_EQ

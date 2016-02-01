@@ -23,6 +23,9 @@ Library
 
   signature EQ_RULES
   structure EqRules
+
+  signature CEQ_RULES
+  structure CeqRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -55,3 +58,6 @@ is
 
   rules/eq.sig
   rules/eq.sml
+
+  rules/ceq.sig
+  rules/ceq.sml

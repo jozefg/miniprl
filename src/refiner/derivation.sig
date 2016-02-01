@@ -163,7 +163,7 @@ sig
      *   H >> a ~ b
      *   H >> [b/x]C
      *)
-    | CEQ_SUBST of int * Term.t * t * t
+    | CEQ_SUBST of Term.t * t * t
     (* H >> a ~ b
      *   a |-> a'
      *   H >> a' ~ b
