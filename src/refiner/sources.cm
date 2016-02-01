@@ -20,6 +20,9 @@ Library
 
   signature UNIT_RULES
   structure UnitRules
+
+  signature EQ_RULES
+  structure EqRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -49,3 +52,6 @@ is
 
   rules/unit.sig
   rules/unit.sml
+
+  rules/eq.sig
+  rules/eq.sml

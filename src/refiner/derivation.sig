@@ -140,7 +140,7 @@ sig
      *)
     | EQ_SYM of t
     (* H >> [a/x]C
-     *   H, x : A >> C' in U(i)
+     *   H, x : A >> C in U(i)
      *   H >> a = b in A
      *   H >> [b/x]C
      *)
