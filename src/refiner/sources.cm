@@ -8,6 +8,9 @@ Library
   signature GOAL
   structure Goal
   structure PrlTactic
+
+  signature PI_RULES
+  structure PiRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -22,3 +25,9 @@ is
 
   goal.sig
   goal.sml
+
+  rules/utils.sig
+  rules/utils.sml
+
+  rules/pi.sig
+  rules/pi.sml
