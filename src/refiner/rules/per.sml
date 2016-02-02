@@ -36,6 +36,37 @@ struct
                }
       | _ => fail
 
-  fun MemEq (cxt >> t) = raise Fail ""
-  fun ElimEq target (cxt >> t) = raise Fail ""
+  fun MemEq uni (cxt >> t) =
+    case t of
+        EQ (a, b, PER A) =>
+        return { goals = [ cxt >> EQ (a, a, BASE)
+                         , cxt >> EQ (b, b, BASE)
+                         , cxt >> subst a 0 (subst (lift 0 1 b) 0 A)
+                         , cxt >> EQ (PER a, PER a, UNI uni)
+                         ]
+               , evidence = fn [d1, d2, d3, d4] =>
+                               PER_MEM_EQ (uni, d1, d2, d3, d4)
+                             | _ => raise MalformedEvidence
+               }
+        | _ => fail
+
+  (* This rule is actually pretty interesting, it's the only rule in the
+   * whole system that introduces a hidden hypothesis. The reason is
+   * that while we know that something is in a per-type only if it satisfies
+   * the relation, we don't have access to evidence for this and all of
+   * that will be erased when we go into a realizer. Therefore, it's important
+   * that we ensure that everything which might make use of this hypothesis
+   * is irrelevant. Then when it comes time to extract, we're guarenteed that
+   * it's OK to substitute in TT instead of some meaningful proof.
+   *)
+  fun ElimEq target (cxt >> t) =
+    case nth (irrelevant t) target cxt of
+        SOME (EQ (a, b, PER A)) =>
+        return { goals = [ (HIDDEN, subst a 0 (subst (lift 0 1 b) 0 A)) ::
+                           cxt >> t
+                         ]
+               , evidence = fn [d] => PER_ELIM_EQ (target, d)
+                             | _ => raise MalformedEvidence
+               }
+      | _ => fail
 end

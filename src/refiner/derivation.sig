@@ -212,7 +212,11 @@ sig
      *   H >> per(x.y.A) = per(x.y.A) in U(i)
      *)
     | PER_MEM_EQ of int * t * t * t * t
-
+    (* H >> C
+     *   H(i) = a = b in per(x.y.A)
+     *   H, HIDE([a, b/x, y]A) >> C
+     *)
+    | PER_ELIM_EQ of int * t (* BINDS *)
     (* H >> C
      *   H >> t = t in C *)
     | WITNESS of Term.t * t

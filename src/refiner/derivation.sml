@@ -42,6 +42,7 @@ struct
     | CUMULATIVE of t
     | PER_EQ of t * t * t * t * t * t (* BINDS *) (* haha cries *)
     | PER_MEM_EQ of int * t * t * t * t
+    | PER_ELIM_EQ of int * t
     | WITNESS of Term.t * t
     | CUT of Guid.t * t
     | VAR of int

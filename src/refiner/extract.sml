@@ -47,6 +47,8 @@ struct
               , subst TT 0 (lift 1 1 (extract d2)))
         | D.UNIT_INTRO => TT
         | D.BASE_ELIM_EQ (i, d) => subst TT 0 (extract d)
+        (* Justified by hidden hyp *)
+        | D.PER_ELIM_EQ (i, d) => subst TT 0 (extract d)
         | D.CUMULATIVE _ => TT
         | D.WITNESS (t, _) => t
         | D.CUT (id, t) => subst (CUST (id, [])) 0 (extract t)
