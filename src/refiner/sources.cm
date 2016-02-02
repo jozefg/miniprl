@@ -9,6 +9,9 @@ Library
   structure Goal
   structure PrlTactic
 
+  signature REFINER_CONFIG
+  structure RefinerConfig
+
   signature PI_RULES
   structure PiRules
 
@@ -49,6 +52,9 @@ is
 
   goal.sig
   goal.sml
+
+  config.sig
+  config.sml
 
   rules/utils.sig
   rules/utils.sml

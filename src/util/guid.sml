@@ -3,6 +3,7 @@ struct
   val counter = ref 0
   type t = {id : int, name : string}
 
+  fun eq (a, b) = a = b
   fun compare ({id = id1, name = name1}, {id = id2, name = name2}) =
       Int.compare (id1, id2)
   fun toString {id, name} = name
