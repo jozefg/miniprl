@@ -34,7 +34,7 @@ sig
    * and the item indicated in the hypothesis is irrelevant we return
    * NONE, in all other cases SOME ... would be returned.
    *
-   * If this is out of bounds we raise Subscript.
+   * If this is out of bounds we also return NONE
    *)
   val nth : bool -> int -> context -> Term.t option
 end

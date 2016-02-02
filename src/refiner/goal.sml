@@ -6,9 +6,10 @@ struct
   datatype t = >> of context * Term.t
 
   fun nth irr i (cxt : context) =
-    case (irr, List.nth (cxt, i)) of
-        (false, (HIDDEN, _)) => NONE
-      | (true, (_, t)) => SOME (Term.lift 0 (i + 1) t)
+    (case (irr, List.nth (cxt, i)) of
+         (false, (HIDDEN, _)) => NONE (* The only case returning NONE *)
+       | (_, (_, t)) => SOME (Term.lift 0 (i + 1) t))
+    handle Subscript => NONE
 end
 
 (* This is the particular implementation of tactics
