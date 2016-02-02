@@ -3,6 +3,7 @@ struct
   open Goal PrlTactic TacticMonad Derivation Term Utils
   infix 3 >>
   infixr >>= <>
+  infixr 4 :::
 
   fun Eq (cxt >> t) =
     case t of
@@ -18,13 +19,13 @@ struct
         EQ (a, b, BASE) =>
         let
           (* We need to check that all free variables in a and b
-           * are variables of type base to ensure the functionality
+           * are visible variables of type base to ensure the functionality
            * of our sequent judgment. Therefore we just gather them
            * all up here and assert it before applying our rule
            *)
           val vars = freevars a @ freevars b
         in
-          if List.all (fn v => nth v cxt = BASE) vars
+          if List.all (fn v => nth false v cxt = SOME BASE) vars
           then
             return { goals = [ cxt >> CEQ (a, b) ]
                    , evidence = fn [d] => BASE_MEM_EQ d
@@ -35,12 +36,12 @@ struct
       | _ => fail
 
   fun ElimEq target (cxt >> t) =
-    case nth target cxt of
-        EQ (a, b, BASE) =>
+    case nth (irrelevant t) target cxt of
+        SOME (EQ (a, b, BASE)) =>
         (* Note that since we're adding to the front of the context we have to
          * lift t up to maintain its variables
          *)
-        return { goals = [CEQ (a, b) :: cxt >> lift 0 1 t ]
+        return { goals = [CEQ (a, b) ::: cxt >> lift 0 1 t ]
                , evidence = fn [d] => BASE_ELIM_EQ (target, d)
                              | _ => raise MalformedEvidence
                }

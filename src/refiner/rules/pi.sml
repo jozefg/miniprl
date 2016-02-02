@@ -25,6 +25,7 @@ struct
   open Goal PrlTactic TacticMonad Term Derivation Utils
   infix 3 >>
   infixr >>= <>
+  infixr 4 :::
 
   (* We'll go through this tactic in more detail than the rest
    * so that it's clear how the general format of a rule goes.
@@ -68,7 +69,7 @@ struct
          * free variables so there's no point.
          *)
         return { goals = [ cxt >> EQ (A1, A2, UNI i)
-                         , A1 :: cxt >> EQ (B1, B2, UNI i)
+                         , A1 ::: cxt >> EQ (B1, B2, UNI i)
                          ]
                (* Like all of the evidence forming functions,
                 * this one is pretty trivial. It just packs the
@@ -105,7 +106,7 @@ struct
     case t of
         PI (A, B) =>
         return { goals = [ cxt >> EQ (A, A, UNI uni)
-                         , A :: cxt >> B
+                         , A ::: cxt >> B
                          ]
                , evidence = fn [d1, d2] => PI_INTRO (uni, d1, d2)
                              | _ => raise MalformedEvidence
@@ -118,10 +119,10 @@ struct
    * and what term we're applying it to.
    *)
   fun Elim target arg (cxt >> t) =
-    case nth target cxt of
-        PI (A, B) =>
+    case nth (irrelevant t) target cxt of
+        SOME (PI (A, B)) =>
         return { goals = [ cxt >> EQ (arg, arg, A)
-                         , subst arg 0 B :: cxt >> t
+                         , subst arg 0 B ::: cxt >> t
                          ]
                , evidence = fn [d1, d2] => PI_ELIM (target, arg, d1, d2)
                              | _ => raise MalformedEvidence
@@ -132,7 +133,7 @@ struct
     case t of
         EQ (LAM b1, LAM b2, PI (A, B)) =>
         return { goals = [ cxt >> EQ (A, A, UNI uni)
-                         , A :: cxt >> EQ (b1, b2, B)
+                         , A ::: cxt >> EQ (b1, b2, B)
                          ]
                , evidence = fn [d1, d2] => LAM_EQ (uni, d1, d2)
                              | _ => raise MalformedEvidence
@@ -179,7 +180,7 @@ struct
         return { goals = [ cxt >> EQ (f1, f1, PI (A, B))
                          , cxt >> EQ (f2, f2, PI (A, B))
                          (* Here is the spot I was referencing *)
-                         , B :: cxt >> EQ (lift 0 1 f1, lift 0 1 f2, B)
+                         , B ::: cxt >> EQ (lift 0 1 f1, lift 0 1 f2, B)
                          ]
                , evidence = fn [d1, d2, d3] => FUN_EXT (d1, d2, d3)
                              | _ => raise MalformedEvidence

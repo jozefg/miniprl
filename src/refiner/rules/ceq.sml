@@ -3,6 +3,7 @@ struct
   open Goal PrlTactic TacticMonad Derivation Term Utils
   infix 3 >>
   infixr >>= <>
+  infixr 4 :::
 
   fun Eq (cxt >> t) =
     case t of

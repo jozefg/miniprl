@@ -14,4 +14,19 @@ sig
    * M + var(0) as would be normal.
    *)
   val substOpen : Term.t -> int -> Term.t -> Term.t
+
+  (* This checks whether a given term is proof relevant or not.
+   * This is important because we're only allowed to use hidden
+   * hypothesis to prove irrelevant goals. This is necessarily
+   * conservative, deciding whether a given program is irrelevant
+   * is undecidable in general and so we just return false if the
+   * argument isn't WHNF.
+   *)
+  val irrelevant : Term.t -> bool
+
+  (* Since the common case is to be adding visible hypothesis to
+   * the context, it pays to have an extra operator to do so.
+   * ::: behaves exactly like :: but tags the hypothesis as visible
+   *)
+  val ::: : Term.t * Goal.context -> Goal.context
 end

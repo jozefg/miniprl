@@ -218,7 +218,8 @@ sig
     | WITNESS of Term.t * t
     (* H >> C
      *   opid is a lemma proving L
-     *   H, L >> C*)
+     *   H, L >> C
+     *)
     | CUT of Guid.t * t (* BINDS *)
     (* H >> C
      *   H(i) = C

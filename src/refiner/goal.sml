@@ -1,10 +1,14 @@
 (* See goal.sig for docs *)
 structure Goal :> GOAL =
 struct
-  type context = Term.t list
+  datatype visible = HIDDEN | VISIBLE
+  type context = (visible * Term.t) list
   datatype t = >> of context * Term.t
 
-  fun nth i cxt = Term.lift 0 (i + 1) (List.nth (cxt, i))
+  fun nth irr i (cxt : context) =
+    case (irr, List.nth (cxt, i)) of
+        (false, (HIDDEN, _)) => NONE
+      | (true, (_, t)) => SOME (Term.lift 0 (i + 1) t)
 end
 
 (* This is the particular implementation of tactics

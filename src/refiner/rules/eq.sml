@@ -3,6 +3,7 @@ struct
   open Goal PrlTactic TacticMonad Derivation Term Utils
   infix 3 >>
   infixr >>= <>
+  infixr 4 :::
 
   fun Eq (cxt >> t) =
     case t of
@@ -40,7 +41,7 @@ struct
         (* Check that our pattern actually describes the current goal *)
         if subst m 0 pat = t
         then
-          return { goals = [ A :: cxt >> EQ (pat, pat, UNI uni)
+          return { goals = [ A ::: cxt >> EQ (pat, pat, UNI uni)
                            , cxt >> eq
                            , cxt >> subst n 0 pat ]
                  , evidence = fn [d1, d2, d3] => EQ_SUBST (uni, pat, d1, d2, d3)

@@ -3,6 +3,7 @@ struct
   open Goal PrlTactic TacticMonad Derivation Term Utils
   infix 3 >>
   infixr >>= <>
+  infixr 4 :::
 
   (* This is a nice example of a rule with no further subgoals
    * to be proven after a successful application. This is indicated
@@ -31,8 +32,8 @@ struct
       | _ => fail
 
   fun Elim target (cxt >> t) =
-    case nth target cxt of
-        NAT =>
+    case nth (irrelevant t) target cxt of
+        SOME NAT =>
         (* The De Bruijn computations are really hairy here. Here's what's
          * going on. First of all, we need to plug in specific constants for
          * every occurence of VAR target in our goal. This involves a
@@ -44,11 +45,11 @@ struct
          * we change the context, the value we need to substitute for (target)
          * changes because it's at different positions in the context.
          *)
-        return { goals = [ EQ (ZERO, VAR target, NAT) :: cxt >>
+        return { goals = [ EQ (ZERO, VAR target, NAT) ::: cxt >>
                            lift 0 1 (substOpen ZERO target t)
-                         , EQ (SUCC (VAR 1), VAR (target + 2), NAT) ::
-                           substOpen (VAR 1) (target + 1) (lift 0 1 t) ::
-                           NAT :: cxt >>
+                         , EQ (SUCC (VAR 1), VAR (target + 2), NAT) :::
+                           substOpen (VAR 1) (target + 1) (lift 0 1 t) :::
+                           NAT ::: cxt >>
                            substOpen (SUCC (VAR 2)) (target + 3) (lift 0 3 t)
                          ]
                , evidence = fn [d1, d2] => NAT_ELIM (target, d1, d2)
@@ -79,7 +80,7 @@ struct
         EQ (REC (n1, z1, s1), REC (n2, z2, s2), A) =>
         return { goals = [ cxt >> EQ (n1, n2, NAT)
                          , cxt >> EQ (z1, z2, A)
-                         , lift 0 1 A :: NAT :: cxt >> EQ (s1, s2, lift 0 2 A)
+                         , lift 0 1 A ::: NAT ::: cxt >> EQ (s1, s2, lift 0 2 A)
                          ]
                , evidence = fn [d1, d2, d3] => REC_EQ (d1, d2, d3)
                              | _ => raise MalformedEvidence

@@ -12,7 +12,15 @@
  *)
 signature GOAL =
 sig
-  type context = Term.t list
+  (* This describes the "visibility" of a hypothesis. A hidden hypothesis
+   * is one for which we may not depend on computationally. This ensures
+   * that it can't show up in a realizer for example. It's a useful way to
+   * attach data that we need to prove some theorems but would only serve to
+   * clutter up the programs which we extrac them to.
+   *)
+  datatype visible = HIDDEN | VISIBLE
+
+  type context = (visible * Term.t) list
   datatype t = >> of context * Term.t
 
 
@@ -21,9 +29,12 @@ sig
    * as it's being pulled out so that it's well-formed under the
    * context it belongs to. This means that nth (0, H) will *lift the
    * first item in H* so that all the variables in the entry will
-   * still point to the correct things in H.
+   * still point to the correct things in H. The bool argument indicates
+   * whether or not we'll accept irrelevant arguments. If it is false
+   * and the item indicated in the hypothesis is irrelevant we return
+   * NONE, in all other cases SOME ... would be returned.
    *
-   * If this is out of bounds we raise Subscript
+   * If this is out of bounds we raise Subscript.
    *)
-  val nth : int -> context -> Term.t
+  val nth : bool -> int -> context -> Term.t option
 end
