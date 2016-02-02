@@ -38,6 +38,9 @@ Library
 
   signature PER_RULES
   structure PerRules
+
+  signature GENERAL_RULES
+  structure GeneralRules
 is
   ../../lib/cmlib/cmlib.cm
   ../comp/sources.cm
@@ -85,3 +88,6 @@ is
 
   rules/per.sig
   rules/per.sml
+
+  rules/general.sig
+  rules/general.sml
