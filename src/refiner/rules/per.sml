@@ -36,12 +36,20 @@ struct
                }
       | _ => fail
 
+  (* This also features some annoying DeBruijn math to correctly apply
+   * the relation to two constants. The correct way I've found of doing this
+   * is to substitute in the one bound first lifted by one. This gives you
+   * a relation with one binder left and the thing you've just substituted
+   * in is correctly lifted past that binder. Substituting in the second
+   * one normally lowers what we've just substituted in and we end up
+   * with the right result.
+   *)
   fun MemEq uni (cxt >> t) =
     case t of
         EQ (a, b, PER A) =>
         return { goals = [ cxt >> EQ (a, a, BASE)
                          , cxt >> EQ (b, b, BASE)
-                         , cxt >> subst a 0 (subst (lift 0 1 b) 0 A)
+                         , cxt >> subst b 0 (subst (lift 0 1 a) 0 A)
                          , cxt >> EQ (PER a, PER a, UNI uni)
                          ]
                , evidence = fn [d1, d2, d3, d4] =>
@@ -50,19 +58,15 @@ struct
                }
         | _ => fail
 
-  (* This rule is actually pretty interesting, it's the only rule in the
-   * whole system that introduces a hidden hypothesis. The reason is
-   * that while we know that something is in a per-type only if it satisfies
-   * the relation, we don't have access to evidence for this and all of
-   * that will be erased when we go into a realizer. Therefore, it's important
-   * that we ensure that everything which might make use of this hypothesis
-   * is irrelevant. Then when it comes time to extract, we're guarenteed that
-   * it's OK to substitute in TT instead of some meaningful proof.
+  (* As noted in the signature, this is the only rule in the system
+   * that uses hidden hypothesis. However, from an implementation point
+   * of view the only difference to us is that we don't use ::: when adding
+   * this new fact to our context, instead we manually ::'s on a tuple.
    *)
   fun ElimEq target (cxt >> t) =
     case nth (irrelevant t) target cxt of
         SOME (EQ (a, b, PER A)) =>
-        return { goals = [ (HIDDEN, subst a 0 (subst (lift 0 1 b) 0 A)) ::
+        return { goals = [ (HIDDEN, subst b 0 (subst (lift 0 1 a) 0 A)) ::
                            cxt >> t
                          ]
                , evidence = fn [d] => PER_ELIM_EQ (target, d)
