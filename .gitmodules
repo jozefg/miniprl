@@ -1,0 +1,3 @@
+[submodule "cmlib"]
+	path = lib/cmlib
+	url = ssh://git@github.com/standardml/cmlib

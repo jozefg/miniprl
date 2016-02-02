@@ -7,7 +7,7 @@ Library
   signature PRIMITIVE_TACTICS
   functor   PrimitiveTactics
 is
-  $/basis.cm
+  ../../lib/cmlib/cmlib.cm
 
   tactic-monad.sig
   tactic-monad.sml

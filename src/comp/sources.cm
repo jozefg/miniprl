@@ -5,7 +5,7 @@ Library
   structure Term
   structure Interpreter
 is
-  $/basis.cm
+  ../../lib/cmlib/cmlib.cm
   ../util/sources.cm
 
   term.sml

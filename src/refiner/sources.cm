@@ -36,7 +36,7 @@ Library
   signature PER_RULES
   structure PerRules
 is
-  $/basis.cm
+  ../../lib/cmlib/cmlib.cm
   ../comp/sources.cm
   ../tactic/sources.cm
   ../util/sources.cm
