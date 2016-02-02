@@ -29,6 +29,9 @@ Library
 
   signature BASE_RULES
   structure BaseRules
+
+  signature UNI_RULES
+  structure UniRules
 is
   $/basis.cm
   ../comp/sources.cm
@@ -67,3 +70,6 @@ is
 
   rules/base.sig
   rules/base.sml
+
+  rules/uni.sig
+  rules/uni.sml

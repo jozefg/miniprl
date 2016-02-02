@@ -194,7 +194,7 @@ sig
     (* H >> A = B in U(i + 1)
      *   H >> A = B in U(i)
      *)
-    | CUMULATIVE
+    | CUMULATIVE of t
     (* H >> per(x.y.A) = per(x.y.A') in U(i)
      *   H, x : base, y : base >> A = A in U(i)
      *   H, x : base, y : base >> A' = A' in U(i)

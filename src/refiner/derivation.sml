@@ -39,7 +39,7 @@ struct
     | BASE_MEM_EQ of t
     | BASE_ELIM_EQ of int * t (* BINDS *)
     | UNI_EQ
-    | CUMULATIVE
+    | CUMULATIVE of t
     | PER_EQ of t * t * t * t * t * t (* BINDS *) (* haha cries *)
     | PER_MEM_EQ of int * t * t * t * t
     | WITNESS of Term.t * t
