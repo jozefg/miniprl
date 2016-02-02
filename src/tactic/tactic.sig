@@ -20,13 +20,7 @@ sig
   type derivation
   type goal
 
-  (* This is the specialization of the nondeterminism we need,
-   * our end goal is *always* a derivation when we run this
-   *)
-  type 'a choice = (derivation, 'a) TacticMonad.t
-
-  (* a tactic is a way of taking a goal and producing a result. A
-   * result is a specification of what's left to do and a way of
+  (* A result is a specification of what's left to do and a way of
    * transforming derivations for the remaining goals into a final
    * derivation
    *
@@ -36,5 +30,12 @@ sig
   type result = { evidence : derivation list -> derivation
                 , goals : goal list
                 }
+
+  (* This is the specialization of the nondeterminism we need,
+   * our end goal is *always* a result when we run this
+   *)
+  type 'a choice = (result, 'a) TacticMonad.t
+
+  (* A result is a specification of what's left to do and a way of *)
   type t = goal -> result choice
 end

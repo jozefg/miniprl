@@ -24,10 +24,10 @@ structure PrlTactic :> TACTIC
 struct
   type derivation = Derivation.t
   type goal = Goal.t
-
-  type 'a choice = (derivation, 'a) TacticMonad.t
   type result = { evidence : derivation list -> derivation
                 , goals : goal list
                 }
+
+  type 'a choice = (result, 'a) TacticMonad.t
   type t = goal -> result choice
 end

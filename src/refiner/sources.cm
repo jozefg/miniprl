@@ -12,35 +12,10 @@ Library
   signature REFINER_CONFIG
   structure RefinerConfig
 
-  signature PI_RULES
-  structure PiRules
+  signature RULES
+  structure Rules
 
-  signature SIG_RULES
-  structure SigRules
-
-  signature NAT_RULES
-  structure NatRules
-
-  signature UNIT_RULES
-  structure UnitRules
-
-  signature EQ_RULES
-  structure EqRules
-
-  signature CEQ_RULES
-  structure CeqRules
-
-  signature BASE_RULES
-  structure BaseRules
-
-  signature UNI_RULES
-  structure UniRules
-
-  signature PER_RULES
-  structure PerRules
-
-  signature GENERAL_RULES
-  structure GeneralRules
+  structure Refiner
 is
   ../../lib/cmlib/cmlib.cm
   ../comp/sources.cm
@@ -91,3 +66,9 @@ is
 
   rules/general.sig
   rules/general.sml
+
+  rules.sml
+  rules.sig
+
+  refiner.sml
+  refiner.sig
