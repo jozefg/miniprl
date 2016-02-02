@@ -44,7 +44,10 @@ struct
         | D.NAT_ELIM (i, d1, d2) =>
           REC ( VAR i
               , subst TT 0 (extract d1)
-              , subst TT 0 (lift 1 1 (extract d2)))
+              (* This is designed to remove the binding for the equality
+               * hypothesis in d2 just like we did for d1
+               *)
+              , subst TT 0 (extract d2))
         | D.UNIT_INTRO => TT
         | D.BASE_ELIM_EQ (i, d) => subst TT 0 (extract d)
         (* Justified by hidden hyp *)
