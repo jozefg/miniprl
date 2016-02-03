@@ -4,6 +4,6 @@ sig
   val Intro : PrlTactic.t
   val Elim : Utils.target -> PrlTactic.t
   val ZeroEq : PrlTactic.t
-  val SuccEQ : PrlTactic.t
-  val RecEQ : PrlTactic.t
+  val SuccEq : PrlTactic.t
+  val RecEq : PrlTactic.t
 end

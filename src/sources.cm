@@ -1,0 +1,9 @@
+Library
+  library(comp/sources.cm)
+  library(tactic/sources.cm)
+  library(refiner/sources.cm)
+is
+  comp/sources.cm
+  tactic/sources.cm
+  refiner/sources.cm
+  util/sources.cm

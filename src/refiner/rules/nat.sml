@@ -66,7 +66,7 @@ struct
                }
       | _ => fail
 
-  fun SuccEQ (cxt >> t) =
+  fun SuccEq (cxt >> t) =
     case t of
         EQ (SUCC m1, SUCC m2, NAT) =>
         return { goals = [ cxt >> EQ (m1, m2, NAT) ]
@@ -75,7 +75,7 @@ struct
                }
       | _ => fail
 
-  fun RecEQ (cxt >> t) =
+  fun RecEq (cxt >> t) =
     case t of
         EQ (REC (n1, z1, s1), REC (n2, z2, s2), A) =>
         return { goals = [ cxt >> EQ (n1, n2, NAT)
