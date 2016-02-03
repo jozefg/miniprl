@@ -36,7 +36,20 @@ As an overview,
     explicitness helps.
 
  - The refiner is built in `src/refiner`. This defines the real logic
-   of the language
+   of the language.
+
+    The refiner is divided into a few different components. There's a
+    module for derivations exhaustively list all the possible
+    operations we can use to manipulate goals during the course of a
+    proof. To actually perform these manipulations we also have a lot
+    of definitions of different primitive tactics (rules). The idea
+    being that everything else in the proof assistant will build on
+    top of these primitive rules and thus the entire trusted base of
+    the proof assistant is contained in `src/refiner/rules`. Once we
+    construct a derivation using those rules we can extract it to a
+    runnable program using `extract.sml`. All of this process is
+    bundled up in the `Refiner` module.
+
  - In `src/interactive-kernel` all of the appropriate features are
    glued together
 
