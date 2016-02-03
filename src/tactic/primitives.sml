@@ -1,4 +1,7 @@
-functor PrimitiveTactics(T : TACTIC) :> PRIMITIVE_TACTICS =
+functor PrimitiveTactics(T : TACTIC) :>
+        PRIMITIVE_TACTICS
+            where type Tactic.derivation = T.derivation
+              and type Tactic.goal = T.goal =
 struct
   structure Tactic = T
 
