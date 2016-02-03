@@ -63,18 +63,25 @@ struct
      Unit.TTEq)
     handle WrongData => Prim.fail
 
-  fun compile script =
+  fun compile (c : RefinerConfig.t) script =
     case script of
         SEQUENCE ts =>
-        List.foldl (fn (SINGLE t, rest) => Prim.next (rest, compile t)
-                     | (MULTI ts, rest) => Prim.split (rest, List.map compile ts))
+        List.foldl (fn (SINGLE t, rest) => Prim.next (rest, compile c t)
+                     | (MULTI ts, rest) =>
+                       Prim.split (rest, List.map (compile c) ts))
                    Prim.id
                    ts
-      | SPLIT (t, ts) => Prim.split (compile t, List.map compile ts)
-      | CHOOSE ts => List.foldl Prim.choose Prim.fail (List.map compile ts)
+      | SPLIT (t, ts) => Prim.split (compile c t, List.map (compile c) ts)
+      | CHOOSE ts => List.foldl Prim.choose Prim.fail (List.map (compile c) ts)
       | ID => Prim.id
       | FAIL => Prim.fail
       | INTRO data => Intro data
       | ELIM data => Elim data
       | EQ data => Eq data
+      | FUNEXT => Pi.FunExt
+      | CUMULATIVE => Uni.Cumulative
+      | ASSUMPTION i => General.Hyp i
+      | CUT id => General.Cut c id
+      | EXPAND id => General.Unfold c id
+      | WITNESS t => General.Witness t
 end

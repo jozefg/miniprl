@@ -4,5 +4,5 @@
  *)
 signature COMPILE_SCRIPT =
 sig
-  val compile : Script.t -> PrlTactic.t
+  val compile : RefinerConfig.t -> Script.t -> PrlTactic.t
 end
