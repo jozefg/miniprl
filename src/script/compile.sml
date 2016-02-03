@@ -49,6 +49,7 @@ struct
      Nat.Eq choose
      Nat.ZeroEq choose
      Nat.SuccEq choose
+     Nat.RecEq choose
      Per.Eq choose
      Per.MemEq (Option.getOpt (uni, 0)) choose
      Pi.Eq choose
@@ -84,4 +85,11 @@ struct
       | CUT id => General.Cut c id
       | EXPAND id => General.Unfold c id
       | WITNESS t => General.Witness t
+      | SYM => Eq.Sym choose Ceq.Sym
+      | STEP => Ceq.Step
+      | REFL => Ceq.Refl
+      | SUBST {uni, pattern, equality} =>
+        Eq.Subst (Option.getOpt (uni, 0)) equality pattern choose
+        Ceq.Subst equality pattern
+
 end

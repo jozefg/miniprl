@@ -28,7 +28,10 @@ sig
   type eq_data = { term : Term.t option (* Used in fst and snd *)
                  , uni : int option
                  }
-
+  type subst_data = { uni : int option (* This is not needed for ceq's subst *)
+                    , pattern : Term.t
+                    , equality : Term.t
+                    }
   datatype t
     (* Given a list of tactics, we can run them end to end to end. If one
      * tactic generates multiple subgoals this will run the remaining tactics
@@ -71,6 +74,7 @@ sig
     | SYM
     | STEP (* This is specifically for CEQ, it lets one step the LHS *)
     | REFL (* This again only applies to CEQ *)
+    | SUBST of subst_data
 
   (* In a pipeline of tactics it's nice to be able to split the current set
    * of goals being built up among several different tactics without breaking

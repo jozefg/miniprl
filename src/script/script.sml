@@ -13,7 +13,10 @@ struct
   type eq_data = { term : Term.t option
                  , uni : int option
                  }
-
+  type subst_data = { uni : int option
+                    , pattern : Term.t
+                    , equality : Term.t
+                    }
   datatype t
     = SEQUENCE of multi_t list
     | SPLIT of t * t list
@@ -31,5 +34,6 @@ struct
     | SYM
     | STEP
     | REFL
+    | SUBST of subst_data
   and multi_t = SINGLE of t | MULTI of t list
 end
