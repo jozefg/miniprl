@@ -1,0 +1,19 @@
+Library
+  signature SCRIPT
+  structure Script
+
+  signature COMPILE_SCRIPT
+  structure CompileScript
+is
+  ../../lib/cmlib/cmlib.cm
+
+  ../util/sources.cm
+  ../comp/sources.cm
+  ../tactic/sources.cm
+  ../refiner/sources.cm
+
+  script.sig
+  script.sml
+
+  compile.sig
+  compile.sml
