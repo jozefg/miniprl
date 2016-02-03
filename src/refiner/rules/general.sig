@@ -22,6 +22,12 @@ sig
    *)
   val Hyp : Utils.target -> PrlTactic.t
 
+  (* H >> C
+   *   H(i) = C
+   * Uses: VAR_EQ
+   *)
+  val HypEq : PrlTactic.t
+
   (* There isn't a nice rule for this really. This rule
    * finds every occurence of the Guid given and expands
    * it according to what the refiner config says is its

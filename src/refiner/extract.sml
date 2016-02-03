@@ -32,6 +32,7 @@ struct
         | D.PER_EQ _ => TT
         | D.PER_MEM_EQ _ => TT
         | D.UNI_EQ => TT
+        | D.VAR_EQ => TT
         | D.CEQ_SUBST (_, _, d) => extract d
         | D.EQ_SUBST (_, _, _, _, d) => extract d
         | D.PI_INTRO (_, _, d) => LAM (extract d)

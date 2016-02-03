@@ -33,6 +33,18 @@ struct
         else fail
       | NONE => fail
 
+  fun HypEq (cxt >> t) =
+    case t of
+        EQ (VAR i, VAR j, A) =>
+        if i = j andalso nth (irrelevant t) i cxt = SOME A
+        then
+          return { goals = []
+                 , evidence = fn [] => Derivation.VAR_EQ
+                               | _ => raise MalformedEvidence
+                 }
+        else fail
+      | _ => fail
+
   (* To make this function a little easier on the eyes, we use
    * an exception to handle the case where the user has applied
    * their custom operator the wrong number of subterms. If this

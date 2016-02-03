@@ -229,4 +229,8 @@ sig
      *   H(i) = C
      *)
     | VAR of int
+    (* H >> x = x in A
+     *   H(x) = A
+     *)
+    | VAR_EQ
 end

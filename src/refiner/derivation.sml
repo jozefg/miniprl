@@ -46,4 +46,5 @@ struct
     | WITNESS of Term.t * t
     | CUT of Guid.t * t
     | VAR of int
+    | VAR_EQ
 end
