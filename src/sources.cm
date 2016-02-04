@@ -2,8 +2,10 @@ Library
   library(comp/sources.cm)
   library(tactic/sources.cm)
   library(refiner/sources.cm)
+  library(script/sources.cm)
 is
   comp/sources.cm
   tactic/sources.cm
   refiner/sources.cm
+  script/sources.cm
   util/sources.cm
