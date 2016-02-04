@@ -22,6 +22,7 @@ struct
     | SPLIT of t * t list
     | CHOOSE of t list
     | ID | FAIL
+    | REPEAT of t
     | INTRO of intro_data
     | ELIM of elim_data
     | EQ of eq_data

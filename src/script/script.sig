@@ -45,6 +45,8 @@ sig
     | SPLIT of t * t list
     (* This allows a user to try tactics from a list until one succeeds *)
     | CHOOSE of t list
+    (* Repeatedly apply a tactic until it fails and then behave as identity *)
+    | REPEAT of t
     | ID | FAIL
 
     (* All type formers have elimination, introduction and equality rules
