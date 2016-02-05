@@ -120,38 +120,39 @@ struct
       | FIX e => FIX (subst (lift 0 1 new) (i + 1) e)
       | CUST (id, es) => CUST (id, List.map (subst new i) es)
 
-  (* TODO: This is very innefficient, maybe use a set? The downside
-   * is that we have to rope in cmlib or similar for that.
-   *)
-  fun dedup (x :: xs) = x :: List.filter (fn y => x <> y) xs
-    | dedup [] = []
-
+  structure Set = SplaySet(structure Elem =
+                             struct
+                               type t = int
+                               val eq = op=
+                               open Int
+                             end)
   fun freevars t =
     let
       fun go c t =
         case t of
-            VAR i => if i < c then [] else [i - c]
+            VAR i => if i < c then Set.empty else Set.singleton (i - c)
           | LAM b => go (c + 1) b
-          | AP (f, a) => go c f @ go c a
-          | PI (a, b) => go c a @ go (c + 1) b
-          | PAIR (l, r) => go c l @ go c r
+          | AP (f, a) => Set.union (go c f) (go c a)
+          | PI (a, b) => Set.union (go c a) (go (c + 1) b)
+          | PAIR (l, r) => Set.union (go c l) (go c r)
           | FST e => go c e
           | SND e => go c e
-          | SIG (a, b) => go c a @ go (c + 1) b
-          | ZERO => []
+          | SIG (a, b) => Set.union (go c a) (go (c + 1) b)
+          | ZERO => Set.empty
           | SUCC t => go c t
-          | REC (n, z, s) => go c n @ go c z @ go (c + 2) s
-          | NAT => []
-          | TT => []
-          | UNIT => []
-          | EQ (a, b, t) => go c a @ go c b @ go c t
-          | CEQ (a, b) => go c a @ go c b
-          | BASE => []
-          | UNI i => []
+          | REC (n, z, s) => Set.union (go c n) (Set.union (go c z) (go (c + 2) s))
+          | NAT => Set.empty
+          | TT => Set.empty
+          | UNIT => Set.empty
+          | EQ (a, b, t) => Set.union (go c a) (Set.union (go c b) (go c t))
+          | CEQ (a, b) => Set.union (go c a) (go c b)
+          | BASE => Set.empty
+          | UNI i => Set.empty
           | PER per => go (c + 2) per
           | FIX e => go (c + 1) e
-          | CUST (id, es) => List.concat (map (go c) es)
+          | CUST (id, es) =>
+            List.foldl (fn (a, b) => Set.union a b) Set.empty (map (go c) es)
     in
-      dedup (go 0 t)
+      Set.toList (go 0 t)
     end
 end
