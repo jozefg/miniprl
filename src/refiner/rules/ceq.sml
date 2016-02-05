@@ -36,7 +36,7 @@ struct
 
   fun Subst eq pat (cxt >> t) =
     case eq of
-        EQ (m, n, A) =>
+        CEQ (m, n) =>
         (* Check that our pattern actually describes the current goal *)
         if subst m 0 pat = t
         then
@@ -63,8 +63,8 @@ struct
   fun Step (cxt >> t) =
     case t of
         CEQ (m, n) => (
-       case Interpreter.step m of
-           Interpreter.STEP m' =>
+       case Interpreter.parallelStep m of
+           SOME m' =>
            return { goals = [ cxt >> CEQ (m', n) ]
                   , evidence = fn [d] => CEQ_STEP d
                                 | _ => raise MalformedEvidence
