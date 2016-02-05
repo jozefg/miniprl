@@ -36,6 +36,7 @@ struct
      , Base.ElimEq 0 next General.Hyp 0
     ])
 
+  (* Ceq tests *)
   val () = mustProve "Ceq.Refl" (CEQ (VAR 0, VAR 0)) Ceq.Refl
   val () = mustProve "Ceq.Refl" (CEQ (TT, TT)) Ceq.Refl
   val () = mustProve "Ceq.Refl"
@@ -65,4 +66,26 @@ struct
       [ Ceq.Eq split [Ceq.Refl, Ceq.Refl]
       , Ceq.Subst (CEQ (ZERO, SUCC ZERO)) (CEQ (REC (VAR 0, TT, UNIT), UNIT)) split
           [General.Hyp 0, Ceq.Step next Ceq.Refl]])
+
+  (* Eq tests *)
+  val () = mustProve "Eq.Eq"
+    (EQ (EQ (UNIT, UNIT, UNI 0), EQ (UNIT, UNIT, UNI 0), UNI 1))
+    (Eq.Eq split [Uni.Eq, Unit.Eq, Unit.Eq])
+  val () = mustProve "Eq.Eq"
+    (EQ (EQ (UNIT, BASE, UNI 0), EQ (UNIT, BASE, UNI 0), UNI 1))
+    (Eq.Eq split [Uni.Eq, Unit.Eq, Base.Eq])
+  val () = mustProve "Eq.MemEq"
+    (EQ (TT, TT, EQ (UNIT, UNIT, UNI 0)))
+    (Eq.MemEq next Unit.Eq)
+  val () = mustProve "Eq.EqSym"
+    (EQ (TT, TT, EQ (UNIT, UNIT, UNI 0)))
+    (Eq.Sym next Eq.MemEq next Unit.Eq)
+  val () = mustProve "Eq.Subst"
+    (PI (EQ (ZERO, SUCC ZERO, NAT), CEQ (REC (ZERO, BASE, UNIT), UNIT)))
+    (Pi.Intro 0 split
+      [ Eq.Eq split [Nat.Eq, Nat.ZeroEq, Nat.SuccEq next Nat.ZeroEq]
+      , Eq.Subst 0 (EQ (ZERO, SUCC ZERO, NAT)) (CEQ (REC (VAR 0, BASE, UNIT), UNIT)) split
+        [ Ceq.Eq split [Ceq.Refl, Ceq.Refl]
+        , General.Hyp 0
+        , Ceq.Step next Ceq.Refl]]);
 end
