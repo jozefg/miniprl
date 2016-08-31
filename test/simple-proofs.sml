@@ -115,4 +115,24 @@ struct
                          General.HypEq,
                          General.Hyp 0
                      ]]]]]]]);
+
+  (* Sig tests *)
+  val () = mustProve "Sig.Elim"
+              (PI (UNI 0,
+               PI (PI (VAR 0, UNI 0),
+               PI (SIG (VAR 1, AP (VAR 1, VAR 0)),
+               VAR 2))))
+              (Pi.Intro 1 split [Uni.Eq,
+               Pi.Intro 1 split [Pi.Eq split [Uni.Cumulative next General.HypEq, Uni.Eq],
+               Pi.Intro 0 split [Sig.Eq split [General.HypEq,
+                                               Pi.ApEq 1 (PI (VAR 2, UNI 0)) split
+                                                       [General.HypEq, General.HypEq, Uni.Eq]],
+               Sig.Elim 0 split [General.Hyp 1]]]]);
+
+  val () = mustProve "Sig.SndEq"
+              (EQ (SND (PAIR (TT, TT)), SND (PAIR (TT, TT)), UNIT))
+              (Sig.SndEq 0 (SIG (UNIT, UNIT)) split [
+                    Sig.PairEq 0 split [Unit.TTEq, Unit.TTEq, Unit.Eq] ,
+                    Unit.Eq
+                ])
 end
