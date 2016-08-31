@@ -122,7 +122,7 @@ struct
     case nth (irrelevant t) target cxt of
         SOME (PI (A, B)) =>
         return { goals = [ cxt >> EQ (arg, arg, A)
-                         , subst arg 0 B ::: cxt >> t
+                         , subst arg 0 B ::: cxt >> lift 0 1 t
                          ]
                , evidence = fn [d1, d2] => PI_ELIM (target, arg, d1, d2)
                              | _ => raise MalformedEvidence
