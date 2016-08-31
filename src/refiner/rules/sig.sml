@@ -67,9 +67,9 @@ struct
 
   fun SndEq uni tp (cxt >> t) =
     case (tp, t) of
-        (SIG (A, B), EQ (FST m1, FST m2, A')) =>
+        (SIG (A, B), EQ (SND m1, SND m2, B')) =>
         return { goals = [ cxt >> EQ (m1, m2, tp)
-                         , cxt >> EQ (subst (FST m1) 0 B, B, UNI uni) ]
+                         , cxt >> EQ (subst (FST m1) 0 B, B', UNI uni) ]
                , evidence = fn [d1, d2] => SND_EQ (uni, tp, d1, d2)
                              | _ => raise MalformedEvidence
                }
