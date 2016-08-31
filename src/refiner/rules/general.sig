@@ -22,8 +22,8 @@ sig
    *)
   val Hyp : Utils.target -> PrlTactic.t
 
-  (* H >> C
-   *   H(i) = C
+  (* H >> x = x in A
+   *   H(x) = A
    * Uses: VAR_EQ
    *)
   val HypEq : PrlTactic.t
