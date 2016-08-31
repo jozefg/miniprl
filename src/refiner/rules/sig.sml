@@ -36,7 +36,7 @@ struct
   fun Elim target (cxt >> t) =
     case nth (irrelevant t) target cxt of
         SOME (SIG (A, B)) =>
-        return { goals = [ B ::: A ::: cxt >> t ]
+        return { goals = [ B ::: A ::: cxt >> lift 0 2 t ]
                , evidence = fn [d] => SIG_ELIM (target, d)
                              | _  => raise MalformedEvidence
                }
