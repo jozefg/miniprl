@@ -88,4 +88,31 @@ struct
         [ Ceq.Eq split [Ceq.Refl, Ceq.Refl]
         , General.Hyp 0
         , Ceq.Step next Ceq.Refl]]);
+
+  (* Pi tests *)
+  val () = mustProve "Pi.FunExt"
+                (PI (UNI 0,
+                 PI (UNI 0,
+                 PI (PI (VAR 1, VAR 1),
+                 PI (PI (VAR 2, VAR 2),
+                 PI (PI (VAR 3, EQ (AP (VAR 2, VAR 0),
+                                    AP (VAR 1, VAR 0),
+                                    VAR 3)),
+                 EQ (VAR 2, VAR 1, PI (VAR 4, VAR 4))))))))
+
+                (Pi.Intro 1 split [Uni.Eq,
+                 Pi.Intro 1 split [Uni.Eq,
+                 Pi.Intro 0 split [Pi.Eq split [General.HypEq, General.HypEq],
+                 Pi.Intro 0 split [Pi.Eq split [General.HypEq, General.HypEq],
+                 Pi.Intro 0 split [Pi.Eq split [General.HypEq,
+                                    Eq.Eq split [General.HypEq,
+                                                 Pi.ApEq 0 (PI (VAR 4, VAR 4)) next
+                                                         General.HypEq,
+                                                 Pi.ApEq 0 (PI (VAR 4, VAR 4)) next
+                                                   General.HypEq]],
+                 Pi.FunExt split [General.HypEq, General.HypEq,
+                     Pi.Elim 1 (VAR 0) split [
+                         General.HypEq,
+                         General.Hyp 0
+                     ]]]]]]]);
 end
