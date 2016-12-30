@@ -40,7 +40,7 @@ struct
          * substitution but we have to use substOpen to make sure that the
          * result still makes sense in cxt.
          *
-         * As an added wrinkle, we're adding things to our constant so we have
+         * As an added wrinkle, we're adding things to our context so we have
          * to carefully apply lifts to the appropriate places. Finally, as
          * we change the context, the value we need to substitute for (target)
          * changes because it's at different positions in the context.
