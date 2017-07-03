@@ -180,9 +180,7 @@ struct
         return { goals = [ cxt >> EQ (f1, f1, PI (A, B))
                          , cxt >> EQ (f2, f2, PI (A, B))
                          (* Here is the spot I was referencing *)
-                         , A ::: cxt >> EQ (AP (lift 0 1 f1, Term.VAR 0),
-                                            AP (lift 0 1 f2, Term.VAR 0),
-                                            B)
+                         , B ::: cxt >> EQ (AP (lift 0 1 f1, Term.VAR 0), AP (lift 0 1 f2, Term.VAR 0), B)
                          ]
                , evidence = fn [d1, d2, d3] => FUN_EXT (d1, d2, d3)
                              | _ => raise MalformedEvidence
